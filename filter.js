@@ -65,17 +65,33 @@ gpsFilter.prototype.accelerationFilter = function(points, min, max) {
     return outputPoints;
 };
 
-gpsFilter.prototype.removeSpikes = function(points, tolerance, sharpness) {
-    var vels = this.produceVectors(points).velocities;
+gpsFilter.prototype.removeSpikes = function(points, sharpness, iterations) {
     var outputPoints = points;
-    for (var i = 0; i < vels.length - 3; i++) {
-        if (this.angleBetween(vels[i], vels[i + 3]) < tolerance)
-            if (this.angleBetween(vels[i], vels[i + 1]) > sharpness && this.angleBetween(vels[i+2], vels[i + 3]) > sharpness)
-                outputPoints.splice(i+2,1);
+    for (var k = 0; k < iterations; k++) {
+        var diff = 0 ;
+        var vels = this.produceVectors(outputPoints).velocities;
+        for (var i = 0; i < vels.length - 1; i++) {
+            if (this.angleBetween(vels[i], vels[i + 1]) > sharpness){
+                outputPoints.splice(i + 1 - diff, 1);
+                diff+=1;
+              }
+        }
     }
     return outputPoints;
 };
-
+gpsFilter.prototype.smoothLine = function(points, threshold){
+  var outputPoints = points;
+  var positions = this.produceVectors(points).positions;
+  var diff =0;
+  for(var i = 0; i < positions.length-2; i++){
+    if(this.angleBetween(positions[i], positions[i+1].add(positions[i+2]))< threshold){
+      outputPoints.splice(i+2 - diff,1);
+      diff+=1;
+    }
+  }
+  console.log(diff)
+  return outputPoints;
+};
 gpsFilter.prototype.angleBetween = function(vec1, vec2) {
     return (Math.acos(vec1.dot(vec2) / (vec1.magnitude() * vec2.magnitude())) * 180) / Math.PI;
 };

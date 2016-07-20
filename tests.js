@@ -125,7 +125,7 @@ describe("Acceleration Filter", function() {
     })
 })
 describe("Remove Spikes", function() {
-    var spikeFree = gpsFilter.removeSpikes(spikePoints, 20, 60)
+    var spikeFree = gpsFilter.removeSpikes(spikePoints, 150)
     it("should remove correct points", function() {
         var tags = spikeFree.map(function(v) {
             return v.tag

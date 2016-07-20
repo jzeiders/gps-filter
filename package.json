@@ -1,10 +1,10 @@
 {
   "name": "gps-filter",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Tool set for filtering gps data",
   "main": "filter.js",
   "scripts": {
-    "test": "mocha tests -watch"
+    "test": "mocha tests"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "victor": "^1.1.0"
+  },
+  "dependencies": {
+    "vectorize": "0.0.3"
   }
 }
