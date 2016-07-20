@@ -1,0 +1,29 @@
+{
+  "name": "gps-filter",
+  "version": "0.0.0",
+  "description": "Tool set for filtering gps data",
+  "main": "filter.js",
+  "scripts": {
+    "test": "mocha tests -watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jzeiders/gps-filter.git"
+  },
+  "keywords": [
+    "GPS",
+    "filter",
+    "analysis",
+    "vector"
+  ],
+  "author": "Jack Zeiders",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jzeiders/gps-filter/issues"
+  },
+  "homepage": "https://github.com/jzeiders/gps-filter#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "victor": "^1.1.0"
+  }
+}
