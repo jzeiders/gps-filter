@@ -16,8 +16,8 @@ npm install gps-filter --save
 ```sh
 # Points is expected to be an array of GPS points with a latitude, longitude, and timestamp;
 # Valid formats: Latitude: [lat, latitude, y]
-#               Longitude[lng,longitude,x] 
-#               Timestamp[time, timestamp, startime]
+#                Longitude[lng,longitude,x] 
+#                Timestamp[time, timestamp, startime]
                 
 #Coordinate data in decimal, timestamp can be in any format momentjs can handle
 #ALL SPEEDS ARE IN M/S
