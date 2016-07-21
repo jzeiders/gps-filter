@@ -130,7 +130,7 @@ describe("Remove Spikes", function() {
         var tags = spikeFree.map(function(v) {
             return v.tag
         })
-        expect(tags.length).to.be.equal(5)
+        expect(tags.length).to.be.equal(6)
         expect(tags.indexOf('c')).to.be.equal(-1);
     })
 })
