@@ -20,12 +20,13 @@ npm install gps-filter --save
 #               Timestamp[time, timestamp, startime]
                 
 #Coordinate data in decimal, timestamp can be in any format momentjs can handle
-
+#ALL SPEEDS ARE IN M/S
 var gps-filter = require('gps-filter')
 
 .positionFilter(points,min,max)
   #Removes points where the change in position is outside the bounds
   returns arrayOfFilteredPoints
+  
 .velocityFilter(points,min,max)
   #Removes points where the velocity is outside the bounds
   returns arrayOfFilteredPoints
