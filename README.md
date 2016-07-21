@@ -3,7 +3,7 @@
 
 # gps-filter
 
-Tool set for filtering gps data
+Tool set for filtering and cleaning-up gps data. Remodels the data set as vectors in order to accomplish this.
 
 ## Installation
 
@@ -12,7 +12,41 @@ Download node at [nodejs.org](http://nodejs.org) and install it, if you haven't 
 ```sh
 npm install gps-filter --save
 ```
+## Use
+```sh
+#Points is expected to be an array of GPS points with a latitude, longitude, and timestamp;
+#Valid formats: Latitude: [lat, latitude, y]
+#               Longitude[lng,longitude,x] 
+#               Timestamp[time, timestamp, startime]
+                
+#Coordinate data in decimal, timestamp can be in any format momentjs can handle
 
+var gps-filter = require('gps-filter')
+
+.positionFilter(points,min,max)
+  #Removes points where the change in position is outside the bounds
+
+.velocityFilter(points,min,max)
+  #Removes points where the velocity is outside the bounds
+
+.accelerationFilter(points,min,max)
+  #Removes points where the acceleration is outside the bounds
+
+.removeSpikes(points,sharpness,iterations)
+  #Remove points where the angle between the vector that starts there and ends there is greater than the sharpness
+  #E.g _/\_ ->  _ _ 
+  #Sharpness: 0-Removes all points, 180-Removes None
+  
+  #Iterations: defines the number of passes
+
+.smoothLine(points, threshold)
+  #Removes points by assuming that if the sum of two vectors is ~parallel to the one
+  #before it they should be combined
+  #E.G. __/\ -> ___ 
+  #~parallel is defined by threshold
+  #Threshold: 0-Vectors must be perfectly parallel 180-Every vector considered parallel (will delete everything!)
+
+```
 
 ## Tests
 
