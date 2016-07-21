@@ -14,8 +14,8 @@ npm install gps-filter --save
 ```
 ## Use
 ```sh
-#Points is expected to be an array of GPS points with a latitude, longitude, and timestamp;
-#Valid formats: Latitude: [lat, latitude, y]
+# Points is expected to be an array of GPS points with a latitude, longitude, and timestamp;
+# Valid formats: Latitude: [lat, latitude, y]
 #               Longitude[lng,longitude,x] 
 #               Timestamp[time, timestamp, startime]
                 
@@ -25,12 +25,14 @@ var gps-filter = require('gps-filter')
 
 .positionFilter(points,min,max)
   #Removes points where the change in position is outside the bounds
-
+  returns arrayOfFilteredPoints
 .velocityFilter(points,min,max)
   #Removes points where the velocity is outside the bounds
+  returns arrayOfFilteredPoints
 
 .accelerationFilter(points,min,max)
   #Removes points where the acceleration is outside the bounds
+  returns arrayOfFilteredPoints
 
 .removeSpikes(points,sharpness,iterations)
   #Remove points where the angle between the vector that starts there and ends there is greater than the sharpness
@@ -38,6 +40,7 @@ var gps-filter = require('gps-filter')
   #Sharpness: 0-Removes all points, 180-Removes None
   
   #Iterations: defines the number of passes
+  returns arrayOfFilteredPoints
 
 .smoothLine(points, threshold)
   #Removes points by assuming that if the sum of two vectors is ~parallel to the one
@@ -45,6 +48,7 @@ var gps-filter = require('gps-filter')
   #E.G. __/\ -> ___ 
   #~parallel is defined by threshold
   #Threshold: 0-Vectors must be perfectly parallel 180-Every vector considered parallel (will delete everything!)
+  returns arrayOfFilteredPoints
 
 ```
 
