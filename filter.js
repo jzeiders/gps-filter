@@ -1,4 +1,4 @@
-var vectorize = require('vectorize')
+var vectorize = require('vectorize');
 
 function gpsFilter() {}
 
@@ -9,52 +9,55 @@ gpsFilter.prototype.produceVectors = function(points) {
         accelerations: vectorize.toAccelerations(points) //Meters / Second^2
     };
 };
-
+//Bounds Maginitude of Position Vector
 gpsFilter.prototype.positionFilter = function(points, min, max) {
     var outputPoints = [];
     var positions = this.produceVectors(points).positions;
     var filtered = vectorFilter(min, max, positions);
     var j = 0;
-    for (var i = 0; i < filtered.length; i++) {
+    for (var i = 0; i < filtered.length; i++) { //Pushes points that werent removed by filter
         while (filtered[i] != positions[i + j]) {
             j++;
         }
+        //Stores the two points that define the vector
         if (outputPoints.indexOf(points[i + j]) == -1)
-            outputPoints.push(points[i + j])
+            outputPoints.push(points[i + j]);
         if (outputPoints.indexOf(points[i + j + 1]) == -1)
-            outputPoints.push(points[i + j + 1])
+            outputPoints.push(points[i + j + 1]);
     }
     return outputPoints;
 };
 
+//Bounds Magnitude of Velocity Vector
 gpsFilter.prototype.velocityFilter = function(points, min, max) {
     var outputPoints = [];
     var velocities = this.produceVectors(points).velocities;
     var filtered = vectorFilter(min, max, velocities);
-    var first = -1,
-        last = -1;
     var j = 0;
-    for (var i = 0; i < filtered.length; i++) {
+    for (var i = 0; i < filtered.length; i++) { //Pushes points that werent removed by filter
         while (filtered[i] != velocities[i + j]) {
             j++;
         }
+        //Stores the two points that define the vector
         if (outputPoints.indexOf(points[i + j]) == -1)
-            outputPoints.push(points[i + j])
+            outputPoints.push(points[i + j]);
         if (outputPoints.indexOf(points[i + j + 1]) == -1)
-            outputPoints.push(points[i + j + 1])
+            outputPoints.push(points[i + j + 1]);
     }
     return outputPoints;
 };
 
+//Bounds Acceleration of Acceleration Vector
 gpsFilter.prototype.accelerationFilter = function(points, min, max) {
     var outputPoints = [];
     var accelerations = this.produceVectors(points).accelerations;
     var filtered = vectorFilter(min, max, accelerations);
     var j = 0;
-    for (var i = 0; i < filtered.length; i++) {
+    for (var i = 0; i < filtered.length; i++) { //Pushes points that werent removed by filter
         while (filtered[i] != accelerations[i + j]) {
             j++;
         }
+        //Stores the three points that define the vector
         if (outputPoints.indexOf(points[i + j]) == -1)
             outputPoints.push(points[i + j]);
         if (outputPoints.indexOf(points[i + j + 1]) == -1)
@@ -65,6 +68,8 @@ gpsFilter.prototype.accelerationFilter = function(points, min, max) {
     return outputPoints;
 };
 
+// Removes points where the angleBetween Vectors is too greater than than the sharpness
+// Sharpness of 0 removes all points, 180 removes none;
 gpsFilter.prototype.removeSpikes = function(points, sharpness, iterations) {
     var outputPoints = points;
     for (var k = 0; k < iterations; k++) {
@@ -79,6 +84,9 @@ gpsFilter.prototype.removeSpikes = function(points, sharpness, iterations) {
     }
     return outputPoints;
 };
+
+// Checks if a vectors is ~parallel to the sum of the vectors following it
+// Threshold define ~parallel 0-Must be perfectly parallel 180-All lines are considered parallel
 gpsFilter.prototype.smoothLine = function(points, threshold){
   var outputPoints = points;
   var positions = this.produceVectors(points).positions;
@@ -89,7 +97,6 @@ gpsFilter.prototype.smoothLine = function(points, threshold){
       diff+=1;
     }
   }
-  console.log(diff)
   return outputPoints;
 };
 gpsFilter.prototype.angleBetween = function(vec1, vec2) {
