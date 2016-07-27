@@ -1,6 +1,6 @@
 {
   "name": "gps-filter",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Tool set for filtering gps data",
   "main": "filter.js",
   "scripts": {

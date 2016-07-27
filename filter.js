@@ -73,13 +73,13 @@ gpsFilter.prototype.accelerationFilter = function(points, min, max) {
 gpsFilter.prototype.removeSpikes = function(points, sharpness, iterations) {
     var outputPoints = points;
     for (var k = 0; k < iterations; k++) {
-        var diff = 0 ;
+        var diff = 0;
         var vels = this.produceVectors(outputPoints).velocities;
         for (var i = 0; i < vels.length - 1; i++) {
-            if (this.angleBetween(vels[i], vels[i + 1]) > sharpness){
+            if (this.angleBetween(vels[i], vels[i + 1]) > sharpness) {
                 outputPoints.splice(i + 1 - diff, 1);
-                diff+=1;
-              }
+                diff += 1;
+            }
         }
     }
     return outputPoints;
@@ -87,17 +87,21 @@ gpsFilter.prototype.removeSpikes = function(points, sharpness, iterations) {
 
 // Checks if a vectors is ~parallel to the sum of the vectors following it
 // Threshold define ~parallel 0-Must be perfectly parallel 180-All lines are considered parallel
-gpsFilter.prototype.smoothLine = function(points, threshold){
-  var outputPoints = points;
-  var positions = this.produceVectors(points).positions;
-  var diff =0;
-  for(var i = 0; i < positions.length-2; i++){
-    if(this.angleBetween(positions[i], positions[i+1].add(positions[i+2]))< threshold){
-      outputPoints.splice(i+2 - diff,1);
-      diff+=1;
+gpsFilter.prototype.smoothLine = function(points, threshold) {
+    var initThreshold = threshold;
+    var outputPoints = points;
+    var positions = this.produceVectors(points).positions;
+    var diff = 0;
+    for (var i = 0; i < positions.length - 2; i++) {
+        if (this.angleBetween(positions[i], positions[i + 1].add(positions[i + 2])) < threshold) {
+            outputPoints.splice(i + 2 - diff, 1);
+            diff += 1;
+            threshold -= 5
+        } else {
+            threshold = initThreshold;
+        }
     }
-  }
-  return outputPoints;
+    return outputPoints;
 };
 gpsFilter.prototype.angleBetween = function(vec1, vec2) {
     return (Math.acos(vec1.dot(vec2) / (vec1.magnitude() * vec2.magnitude())) * 180) / Math.PI;
