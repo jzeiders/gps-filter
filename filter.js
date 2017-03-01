@@ -113,4 +113,4 @@ var vectorFilter = function(min, max, vectors) {
     });
 };
 
-module.exports = exports = new gpsFilter();
+module.exports = new gpsFilter();
