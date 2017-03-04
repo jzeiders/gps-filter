@@ -12,6 +12,8 @@ Download node at [nodejs.org](http://nodejs.org) and install it, if you haven't 
 ```sh
 npm install gps-filter --save
 ```
+### Browser Use
+Included is a file called "browser_filter", compiled with browserify. Can be included in any html file, and will "gpsFilter" will be available globally.
 ## Use
 ```sh
 # Points is expected to be an array of GPS points with a latitude, longitude, and timestamp;
